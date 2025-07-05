@@ -81,6 +81,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   ```python
   ![Histogram](image/zd 1.jpg)
   ![Ceny mieszkań w miastach](images/zd 1.png)
+  ![Ceny mieszkań w miastach](zd 1.jpg)
+
 
 
 
