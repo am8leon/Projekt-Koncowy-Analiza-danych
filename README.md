@@ -404,7 +404,7 @@ Większość mieszkań ma powierzchnię 30–60 m²
 Pojedyncze wartości skrajne (ponad 100 m²)
 
 -**Wizualizacja:**
-![Ceny mieszkań w miastach](zd16.jpg)
+![Ceny mieszkań w miastach](zd15.jpg)
 
 -----
 
@@ -432,7 +432,7 @@ Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
 
 -**Wizualizacja:**
-![Ceny mieszkań w miastach](zd17.jpg)
+![Ceny mieszkań w miastach](zd16.jpg)
 
 -----
 # Slajd 17: Korelacje liczbowych – Spearman
@@ -458,7 +458,7 @@ Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
 
 -**Wizualizacja**
-![Ceny mieszkań w miastach](zd18.jpg)
+![Ceny mieszkań w miastach](zd17.jpg)
 
 ------
 
@@ -491,7 +491,7 @@ Przykłady: city, district, street
 Ciepłe kolory = silniejsze powiązanie
 
 -**Wizualizacja**
-![Ceny mieszkań w miastach](zd19.jpg)
+![Ceny mieszkań w miastach](zd18.jpg)
 
 -----
 # Slajd 18: Cramér’s V – zmienne kategoryczne jakościowe 
@@ -525,7 +525,7 @@ Ciepłe kolory = silniejsze powiązanie
 - Na tym wykresie mamy macierz korelacji Craméra – pokazuje ona siłę związku między zmiennymi jakościowymi. Na przykład bardzo silny związek występuje między długością geograficzną a odległością od centrum – co jest logiczne, bo lokalizacja wpływa na centralność mieszkania. Z kolei wyposażenie jak balkon czy komórka lokatorska występują raczej niezależnie od innych cech. Kolorystycznie ciemniejsze pola wskazują na silniejsze współwystępowanie dwóch cech. To pozwala wychwycić powiązania między atrybutami, które często nie są widoczne w tradycyjnej tabeli.
 
 -**Wizualizacja**
-![Ceny mieszkań w miastach](zd20.jpg)
+![Ceny mieszkań w miastach](zd19.jpg)
 
 ------
 # Slajd 19: Kluczowe wnioski
