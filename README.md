@@ -170,7 +170,7 @@ Warszawa i Kraków – najwyższe ceny maksymalne
 
 ----
 
-#Slajd 10: Kurtoza cen wg miast
+# Slajd 10: Kurtoza cen wg miast
 Kurtoza: miara „spiczastości” rozkładu
 Obliczona dla price w danych zakupu 2024
 - Kod:  
@@ -188,7 +188,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 
 ----
 
-#Slajd 11: Statystyki opisowe dla wynajmu (heatmapy)
+# Slajd 11: Statystyki opisowe dla wynajmu (heatmapy)
 - Kod:  
   ```python
       for df, cmap, title in [
@@ -211,7 +211,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 
 -----
 
-#Slajd 11: Statystyki opisowe dla zakupu 2024 (heatmapy)
+# Slajd 11: Statystyki opisowe dla zakupu 2024 (heatmapy)
 - Kod:  
   ```python
       for df, cmap, title in [
@@ -232,7 +232,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 
 - **Wizualizacja:**
 -----
-#Slajd 12: Statystyki opisowe dla zakupu 2023 (heatmapy)
+# Slajd 12: Statystyki opisowe dla zakupu 2023 (heatmapy)
 - Kod:  
   ```python
       for df, cmap, title in [
@@ -253,7 +253,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 
 - **Wizualizacja:**
 -----
-#Slajd 13: ROI – opłacalność wynajmu
+# Slajd 13: ROI – opłacalność wynajmu
 - Mediana czynszu / Mediana ceny zakupu × 100%
 - ROI wyrażony procentowo – ile wynosi roczny zwrot z inwestycji
 - Kod:  
@@ -274,7 +274,7 @@ Warszawa, Gdańsk, Kraków
 - **Wizualizacja:**
 - 
 -----
-#Slajd 14: Wykres średniej ceny za m²
+# Slajd 14: Wykres średniej ceny za m²
 
 - Kod:  
   ```python
@@ -308,7 +308,7 @@ Duża zmienność w miastach turystycznych
 - 
 
 ----
-#Slajd 15: Histogram Box plot Rozkład cen za m2 
+# Slajd 15: Histogram Box plot Rozkład cen za m2 
 
 - Kod:  
   ```python
@@ -346,7 +346,7 @@ Duża zmienność w miastach turystycznych
 
 -----
 
-#Slajd 15: Rozkład powierzchni mieszkań
+# Slajd 15: Rozkład powierzchni mieszkań
 - Kod:  
   ```python
           plt.figure(figsize=(20, 6))
@@ -375,12 +375,11 @@ Duża zmienność w miastach turystycznych
 Większość mieszkań ma powierzchnię 30–60 m²
 Pojedyncze wartości skrajne (ponad 100 m²)
 
-
 -**Wizualizacja:**
 
 -----
 
-#Slajd 16: Korelacje liczbowych – Pearson
+# Slajd 16: Korelacje liczbowych – Pearson
 Pearson – liniowa korelacja między zmiennymi liczbowymi
 
 - Kod:  
@@ -406,7 +405,7 @@ Zmienne ilościowe mają niską korelację między sobą poza price
 -**Wizualizacja:**
 
 -----
-#Slajd 17: Korelacje liczbowych – Spearman
+# Slajd 17: Korelacje liczbowych – Spearman
 Spearman – korelacja rang (monotoniczna)
 
 - Kod:  
@@ -438,7 +437,7 @@ Ciepłe kolory = silniejsze powiązanie
 
 -----
 
-#Slajd 19: Kluczowe wnioski
+# Slajd 19: Kluczowe wnioski
 Dane wymagają czyszczenia i imputacji
 Miasta różnią się znacząco pod względem cen
 ROI może służyć jako wskaźnik inwestycyjny
@@ -446,7 +445,7 @@ Cena za m² – lepszy wskaźnik niż całkowita cena
 Warto wykorzystywać metryki statystyczne (kurtoza, korelacja) do identyfikacji outlierów
 ------
 
-#Slajd 20: Rekomendacje
+# Slajd 20: Rekomendacje
 Dla pośredników:
 Skupienie na miastach o niskim ROI przy sprzedaży
 Analiza outlierów dla nietypowych ofert
