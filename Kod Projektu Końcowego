@@ -139,6 +139,7 @@ def main():
     plt.title("Ceny zakupu mieszkań w różnych miastach")
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
+    plt.savefig("moj-folder/zd 4.jpg")
     plt.show()
 
     #  Boxplot cen zakupu (2024) - z formatowaniem osi Y
