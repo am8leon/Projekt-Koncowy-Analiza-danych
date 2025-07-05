@@ -78,6 +78,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
 
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd1.jpg)
 
 **Notatka Braki w danych zakupu 2024:**  
 - Opis wykresu braki w danych zakupu 2024
@@ -97,9 +98,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 
 
 - **Wizualizacja:**
-![Ceny mieszkań w miastach](images/zd1.jpg)
+![Ceny mieszkań w miastach](zd2.jpg)
 
-  
 **Notatka Braki w danych  2023:**  
 - Opis wykresu braki w danych zakupu 2023
 - Wizualizacja pokazuje rozmieszczenie brakujących danych w zbiorze ofert sprzedaży mieszkań. Dzięki niej można szybko zobaczyć, w których zmiennych (kolumnach) najczęściej występują braki, i w jakich wierszach one się pojawiają.
@@ -117,6 +117,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
         plt.title(title)
         plt.show()  
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd3.jpg)
 
 ---
 
@@ -129,6 +130,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   sns.boxplot(x="city", y="price", data=df_buy_2024, ax=ax)
   
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd4.jpg)
 
 **Notatka Boxplot – ceny wg miast:**
 - Opis histogramu:
@@ -147,7 +149,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   ```python
       sns.boxplot(x="city", y="price", data=df_rent)
 - **Wizualizacja:**
-  
+![Ceny mieszkań w miastach](zd5.jpg)  
 
 **Notatka Boxplot – ceny wg miast:**
 - Opis histogramu:
@@ -167,7 +169,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Opis do prezentacji
 - Na tym wykresie zobaczymy, jak cechy mieszkań wpływają na siebie nawzajem. Intensywny czerwony kolor między metrażem a liczbą pokoi (0.81) pokazuje , że większe mieszkania mają więcej pokoi – co jest intuicyjne. Ciekawostką jest ujemna korelacja między rokiem budowy a szerokością geograficzną – nowe budynki są częściej zlokalizowane bardziej na południu. To zestawienie pozwala szybko wyłapać, które cechy mogą się wzajemnie przewidywać i jakie zależności istnieją między lokalizacją, powierzchnią a ceną.
 - **Wizualizacja:**
-
+![Ceny mieszkań w miastach](zd6.jpg)
 -----
 
 # Slajd 9: Minimalne i maksymalne ceny
@@ -186,8 +188,10 @@ Znaczne różnice w rozrzucie cen pomiędzy miastami
 Warszawa i Kraków – najwyższe ceny maksymalne
 
 -**Wizualizacja:**
+![Ceny mieszkań w miastach](zd7.jpg)
 
 ----
+
 
 # Slajd 10: Kurtoza cen wg miast
 Kurtoza: miara „spiczastości” rozkładu
@@ -204,6 +208,7 @@ Wnioski:
 Miasta o wysokiej kurtozie mają więcej ekstremalnych cen
 Pozwala identyfikować rynki niestabilne lub spekulacyjne
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd8.jpg)
 
 ----
 
@@ -227,7 +232,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 - Na tej mapie cieplnej widzimy zestawienie kluczowych miar statystycznych dotyczących wynajmowanych mieszkań. Kolumny odnoszą się do typowych miar, takich jak średnia czy mediana, a wiersze to cechy mieszkań. Dla przykładu, przeciętne mieszkanie ma 54 m², kosztuje 3704 zł i ma ok. 2,34 pokoju. Ciemne kolory, jak w przypadku ceny maksymalnej – niemal 19 500 zł – od razu wskazują wartości najwyższe. Takie wizualne przedstawienie danych ułatwia szybkie porównania bez potrzeby czytania tabeli liczbowej
 
 - **Wizualizacja:**
-
+![Ceny mieszkań w miastach](zd9.jpg)
 -----
 
 # Slajd 11: Statystyki opisowe dla zakupu 2024 (heatmapy)
@@ -250,6 +255,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 - Ta mapa ciepła to zestawienie statystyk opisowych dla różnych cech mieszkań. Na osi Y mamy cechy jak metraż, liczba pokoi czy cena, a na osi X miary statystyczne – np. średnie, odchylenia i wartości maksymalne. Wartości liczbowe w kwadratach pozwalają ocenić poziomy każdej cechy, a kolory wskazują, które liczby są szczególnie wysokie. Na przykład, przy cenie widzimy ciemnoczerwone pole w kolumnie ‘max’, co sygnalizuje, że niektóre mieszkania kosztują nawet 3 mln zł. Natomiast jaśniejsze barwy przy liczbie pokoi czy piętrze pokazują, że te cechy są bardziej jednolite
 
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd10.jpg)
 -----
 # Slajd 12: Statystyki opisowe dla zakupu 2023 (heatmapy)
 - Kod:  
@@ -271,6 +277,7 @@ Pozwala identyfikować rynki niestabilne lub spekulacyjne
 - Na tej mapie cieplnej widzimy podsumowanie statystyczne różnych cech mieszkań, które były dostępne na rynku w 2023 roku. Oś pionowa to cechy ofert, takie jak cena, liczba pokoi czy rok budowy. Oś pozioma pokazuje, jakie miary statystyczne dla nich obliczono — średnią, odchylenie czy maksymalną wartość. Każdy kwadrat pokazuje konkretną liczbę, ale również kolorystycznie zaznacza, jak wysoka jest dana wartość. Na przykład: najciemniejsze pole to maksymalna cena mieszkania – aż 3,25 mln zł, natomiast najjaśniejsze wskazuje bardzo niskie wartości — np. minimalna liczba pokoi to 1. Dzięki tej wizualizacji można ocenić, które cechy mieszkań są bardziej zróżnicowane i gdzie dominują wartości ekstremalne
 
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd11.jpg)
 -----
 # Slajd 13: ROI – opłacalność wynajmu
 - Mediana czynszu / Mediana ceny zakupu × 100%
@@ -291,7 +298,7 @@ Miasta z niskim ROI:
 Warszawa, Gdańsk, Kraków
 
 - **Wizualizacja:**
-
+![Ceny mieszkań w miastach](zd12.jpg)
 -----
 # Slajd 14: Wykres średniej ceny za m²
 
@@ -324,6 +331,7 @@ Najwyższe stawki: Warszawa, Gdańsk , Kraków
 Duża zmienność w miastach turystycznych
 
 - **Wizualizacja:**
+![Ceny mieszkań w miastach](zd13.jpg)
 
 
 ----
@@ -361,7 +369,7 @@ Najwyższe stawki: Warszawa, Gdańsk
 Duża zmienność w miastach turystycznych
 
 - **Wizualizacja:**
-  
+![Ceny mieszkań w miastach](zd14.jpg)
 
 -----
 
@@ -395,6 +403,7 @@ Większość mieszkań ma powierzchnię 30–60 m²
 Pojedyncze wartości skrajne (ponad 100 m²)
 
 -**Wizualizacja:**
+![Ceny mieszkań w miastach](zd16.jpg)
 
 -----
 
@@ -422,6 +431,7 @@ Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
 
 -**Wizualizacja:**
+![Ceny mieszkań w miastach](zd17.jpg)
 
 -----
 # Slajd 17: Korelacje liczbowych – Spearman
@@ -445,6 +455,10 @@ Spearman – korelacja rang (monotoniczna)
 - Wnioski:
 Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
+
+-**Wizualizacja**
+![Ceny mieszkań w miastach](zd18.jpg)
+
 ------
 
 # Slajd 18: Cramér’s V – zmienne kategoryczne ilościowe
@@ -474,6 +488,10 @@ Miernik siły asocjacji między cechami nominalnymi
 Obliczony dla par kolumn kategorycznych
 Przykłady: city, district, street
 Ciepłe kolory = silniejsze powiązanie
+
+-**Wizualizacja**
+![Ceny mieszkań w miastach](zd19.jpg)
+
 -----
 # Slajd 18: Cramér’s V – zmienne kategoryczne jakościowe 
 
@@ -504,6 +522,9 @@ Ciepłe kolory = silniejsze powiązanie
 - To macierz korelacji Cramér’s V, używana do oceny siły związku między zmiennymi jakościowymi (kategorycznymi) opisującymi cechy mieszkań oraz lokalizacji. Umożliwia szybkie wychwycenie, które cechy współwystępują ze sobą, a które są niezależne.
 - Opis do prezentacji
 - Na tym wykresie mamy macierz korelacji Craméra – pokazuje ona siłę związku między zmiennymi jakościowymi. Na przykład bardzo silny związek występuje między długością geograficzną a odległością od centrum – co jest logiczne, bo lokalizacja wpływa na centralność mieszkania. Z kolei wyposażenie jak balkon czy komórka lokatorska występują raczej niezależnie od innych cech. Kolorystycznie ciemniejsze pola wskazują na silniejsze współwystępowanie dwóch cech. To pozwala wychwycić powiązania między atrybutami, które często nie są widoczne w tradycyjnej tabeli.
+
+-**Wizualizacja**
+![Ceny mieszkań w miastach](zd20.jpg)
 
 ------
 # Slajd 19: Kluczowe wnioski
