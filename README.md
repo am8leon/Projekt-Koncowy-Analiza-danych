@@ -44,16 +44,16 @@ Założeniem było zrosumieć i porównać struktury ofert, poziomu cen i różn
   - Identyfikacja braków i imputacja:  
     - Mediana dla liczb  
     - Hot-deck dla `area` w ramach miasta
-- Wczytywanie:
+- **Wczytywanie:**
 - Kod:  
   ```python
   dfs[key] = read_csv_with_fallback(path)
-- Czyszczenie miast:
+- **Czyszczenie miast:**
 - Kod:  
   ```python
   def clean_city_column(df):
     df['city'] = df['city'].str.strip().str.title()
-- Imputacja:
+- **Imputacja:**
 - Kod:  
   ```python
   df[num_cols] = df[num_cols].fillna(df[num_cols].median())
@@ -76,7 +76,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
 
-- Wizualizacja: 
+- **Wizualizacja:**
 
 **Notatka Braki w danych zakupu 2024:**  
 - Opis wykresu braki w danych zakupu 2024
@@ -86,7 +86,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
-- Wizualizacja: 
+- **Wizualizacja:**
   
 **Notatka Braki w danych 2023:**  
 - Opis wykresu braki w danych zakupu 2023
@@ -96,8 +96,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
-- Wizualizacja:
-
+- **Wizualizacja:**
 
 
 ---
@@ -110,7 +109,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   ```python
   sns.boxplot(x="city", y="price", data=df_buy_2024)
   sns.boxplot(x="city", y="price", data=df_buy_2024, ax=ax)
-- Wizualizacja:
+- **Wizualizacja:**
 
 **Notatka Boxplot – ceny wg miast:**
 - Opis histogramu:
@@ -128,7 +127,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
       sns.boxplot(x="city", y="price", data=df_rent)
-- Wizualizacja:
+- **Wizualizacja:**
+  
 
 **Notatka Boxplot – ceny wg miast:**
 - Opis histogramu:
@@ -142,13 +142,13 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   ```python
   df_corr = numeric_df.corr()
   sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
-- Wizualizacja:
 **Notatka Heatmapa Korelacji:**
 - Opis Hisotgramy heatmap
 - Co przedstawia tA mapa ciepła (heatmapa) macierzy korelacji – każdy kwadrat pokazuje, jak bardzo dwie zmienne są ze sobą powiązane. To macierz korelacji przedstawiająca siłę i kierunek powiązań pomiędzy różnymi cechami ofert nieruchomości na sprzedaż
 - Opis do prezentacji
 - Na tym wykresie zobaczymy, jak cechy mieszkań wpływają na siebie nawzajem. Intensywny czerwony kolor między metrażem a liczbą pokoi (0.81) pokazuje , że większe mieszkania mają więcej pokoi – co jest intuicyjne. Ciekawostką jest ujemna korelacja między rokiem budowy a szerokością geograficzną – nowe budynki są częściej zlokalizowane bardziej na południu. To zestawienie pozwala szybko wyłapać, które cechy mogą się wzajemnie przewidywać i jakie zależności istnieją między lokalizacją, powierzchnią a ceną.
-- Wizualizacja:
+- **Wizualizacja:**
+- 
 -----
 
 # Slajd 9: Minimalne i maksymalne ceny
@@ -165,7 +165,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 Wnioski:
 Znaczne różnice w rozrzucie cen pomiędzy miastami
 Warszawa i Kraków – najwyższe ceny maksymalne
--Wizualizacja:
+
+-**Wizualizacja:**
 
 ----
 
@@ -183,78 +184,261 @@ Obliczona dla price w danych zakupu 2024
 Wnioski:
 Miasta o wysokiej kurtozie mają więcej ekstremalnych cen
 Pozwala identyfikować rynki niestabilne lub spekulacyjne
--Wizualizacja:
+- **Wizualizacja:**
 
 ----
 
-#Slajd 11: Statystyki opisowe (heatmapy)
-Heatmapy statystyk describe()
-Dla zbiorów: wynajem, zakup 2024 i 2023
-Ułatwiają szybkie porównanie rozkładów cech liczbowych
-Skala kolorów: min–max dla każdej cechy
-**Notatka Statystyki Opisowe:**
+#Slajd 11: Statystyki opisowe dla wynajmu (heatmapy)
+- Kod:  
+  ```python
+      for df, cmap, title in [
+        (df_rent,     "YlGnBu", "Statystyki opisowe dla wynajmu"),
+    ]:
+        stats = df.describe().transpose()
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(stats, annot=True, cmap=cmap, fmt=".2f")
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
+  
+**Notatka Statystyki Opisowe dla wynajmu:**
 - Opis Heatmap
 - To mapa cieplna (heatmapa), która przedstawia wartości statystyk opisowych dla różnych cech mieszkań przeznaczonych na wynajem. Umożliwia szybkie porównanie miar takich jak: średnia, mediana, rozrzut i wartości skrajne dla takich atrybutów jak metraż, liczba pokoi, piętro, rok budowy czy cena.
 - Opis do prezentacji
 - Na tej mapie cieplnej widzimy zestawienie kluczowych miar statystycznych dotyczących wynajmowanych mieszkań. Kolumny odnoszą się do typowych miar, takich jak średnia czy mediana, a wiersze to cechy mieszkań. Dla przykładu, przeciętne mieszkanie ma 54 m², kosztuje 3704 zł i ma ok. 2,34 pokoju. Ciemne kolory, jak w przypadku ceny maksymalnej – niemal 19 500 zł – od razu wskazują wartości najwyższe. Takie wizualne przedstawienie danych ułatwia szybkie porównania bez potrzeby czytania tabeli liczbowej
--Wizualizacja:
 
-
+- **Wizualizacja:**
 
 -----
-#Slajd 12: ROI – opłacalność wynajmu
-Mediana czynszu / Mediana ceny zakupu × 100%
 
-ROI wyrażony procentowo – ile wynosi roczny zwrot z inwestycji
+#Slajd 11: Statystyki opisowe dla zakupu 2024 (heatmapy)
+- Kod:  
+  ```python
+      for df, cmap, title in [
+        (df_buy_2024, "YlOrRd", "Statystyki opisowe dla zakupu 2024"),
+    ]:
+        stats = df.describe().transpose()
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(stats, annot=True, cmap=cmap, fmt=".2f")
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
+    
+**Notatka Statystyki Opisowe dla zakupu:**
+- Opis Heatmap
+- Ta mapa cieplna statystyk opisowych dotyczących ofert zakupu mieszkań w 2024 roku. Umożliwia szybkie porównanie różnych cech nieruchomości i ich wartości liczbowych — np. średnia cena, liczba pokoi, czy rok budowy.
+- Opis do prezentacji
+- Ta mapa ciepła to zestawienie statystyk opisowych dla różnych cech mieszkań. Na osi Y mamy cechy jak metraż, liczba pokoi czy cena, a na osi X miary statystyczne – np. średnie, odchylenia i wartości maksymalne. Wartości liczbowe w kwadratach pozwalają ocenić poziomy każdej cechy, a kolory wskazują, które liczby są szczególnie wysokie. Na przykład, przy cenie widzimy ciemnoczerwone pole w kolumnie ‘max’, co sygnalizuje, że niektóre mieszkania kosztują nawet 3 mln zł. Natomiast jaśniejsze barwy przy liczbie pokoi czy piętrze pokazują, że te cechy są bardziej jednolite
 
-Najbardziej opłacalne miasta:
+- **Wizualizacja:**
+-----
+#Slajd 12: Statystyki opisowe dla zakupu 2023 (heatmapy)
+- Kod:  
+  ```python
+      for df, cmap, title in [
+         (df_buy_2023, "BuPu",   "Statystyki opisowe dla zakupu 2023"),
+    ]:
+        stats = df.describe().transpose()
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(stats, annot=True, cmap=cmap, fmt=".2f")
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
+    
+**Notatka Statystyki Opisowe dla zakupu:**
+- Opis Heatmap
+- Zestawienie podstawowych statystyk opisowych (count, mean, std, min, 25%, 50%, 75%, max) dla siedmiu cech ofert nieruchomości w 2023 roku. Pokazuje w jednym miejscu: jakie wartości przyjmują różne cechy mieszkań (np. liczba pokoi, cena),oraz jak bardzo te wartości się różnią.
+- Opis do prezentacji
+- Na tej mapie cieplnej widzimy podsumowanie statystyczne różnych cech mieszkań, które były dostępne na rynku w 2023 roku. Oś pionowa to cechy ofert, takie jak cena, liczba pokoi czy rok budowy. Oś pozioma pokazuje, jakie miary statystyczne dla nich obliczono — średnią, odchylenie czy maksymalną wartość. Każdy kwadrat pokazuje konkretną liczbę, ale również kolorystycznie zaznacza, jak wysoka jest dana wartość. Na przykład: najciemniejsze pole to maksymalna cena mieszkania – aż 3,25 mln zł, natomiast najjaśniejsze wskazuje bardzo niskie wartości — np. minimalna liczba pokoi to 1. Dzięki tej wizualizacji można ocenić, które cechy mieszkań są bardziej zróżnicowane i gdzie dominują wartości ekstremalne
 
+- **Wizualizacja:**
+-----
+#Slajd 13: ROI – opłacalność wynajmu
+- Mediana czynszu / Mediana ceny zakupu × 100%
+- ROI wyrażony procentowo – ile wynosi roczny zwrot z inwestycji
+- Kod:  
+  ```python
+  roi      = (rent_med / buy_med * 100).sort_values(ascending=False)
+  sns.barplot(x=roi.index, y=roi.values)
+
+- Opis wykresu Opłacalnosć wynajmu względem zakupu
+- To histogram słupkowy, który ilustruje średni roczny zwrot z inwestycji (ROI) z wynajmu mieszkań w 14 miastach Polski. ROI (Return on Investment) to procentowy wskaźnik mówiący, jak duży zwrot roczny inwestor uzyskuje z najmu nieruchomości w stosunku do ceny zakupu.
+- Opis do prezentacji
+- Ten wykres pokazuje, jak bardzo opłacalny jest najem mieszkań w różnych miastach. Wysokość słupka to średni roczny zwrot z inwestycji w danym mieście – czyli ile procent ceny zakupu odzyskujemy co roku z najmu. Radom i Częstochowa oferują najwyższy ROI – tam zyski z najmu są proporcjonalnie najwyższe. W Warszawie ROI jest umiarkowane – mimo wysokich czynszów, ceny zakupu są jeszcze wyższe. Najniższy zwrot widzimy w Białymstoku – co może zniechęcać inwestorów szukających szybkiego zwrotu
+
+- Wnioski Najbardziej opłacalne miasta:
 Gorzów Wlkp., Bydgoszcz, Rzeszów
-
 Miasta z niskim ROI:
-
 Warszawa, Gdańsk, Kraków
+
+- **Wizualizacja:**
+- 
 -----
-#Slajd 13: Cena za m² – statystyki i wykresy
-Dodano kolumnę price_per_m2
+#Slajd 14: Wykres średniej ceny za m²
 
-Statystyki: średnia, mediana, min, max
+- Kod:  
+  ```python
+          fig, ax = plt.subplots(figsize=(20, 6))
+        sns.barplot(x='city', y='Średnia', data=stats_m2,
+                    palette='viridis', ax=ax)
+        ax.set_title("Średnia cena za m² mieszkania (zakup 2024) wg miast")
+        ax.set_ylabel("Cena [PLN/m²]")
+        ax.set_xlabel("Miasto")
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, pos: f"{int(v):,}".replace(",", " ")))
+        plt.xticks(rotation=45, ha='right')
+        for p in ax.patches:
+            h = int(p.get_height())
+            ax.annotate(
+                f"{h:,}".replace(",", " "),
+                (p.get_x() + p.get_width() / 2, h),
+                ha='center', va='bottom', fontsize=9
+            )
+        plt.tight_layout()
+        plt.show()
 
-Wykresy:
-Barplot średniej ceny za m²
-Boxplot rozkładu cen za m² wg miast
+- Opis Wykres
+-  To histogram słupkowy, który wizualizuje średnią cenę 1 m² mieszkania w 15 największych miastach Polski, na podstawie danych z 2024 roku. Wykres umożliwia szybkie porównanie poziomu cen między lokalizacjami.
+- Opis do prezentacji
+- Na wykresie widzimy średnie ceny mieszkań w wybranych miastach Polski. Każdy słupek obrazuje wartość przeciętnego mieszkania – im wyższy, tym droższy rynek. Warszawa zdecydowanie przoduje pod względem cen, z średnią przekraczającą milion złotych, podczas gdy Radom i Częstochowa pozostają najbardziej przystępne cenowo. Taki wykres pozwala szybko zorientować się, które miasta są droższe, a które bardziej dostępne dla kupujących.
+- Wnioski:
+Najwyższe stawki: Warszawa, Gdańsk , Kraków
+Duża zmienność w miastach turystycznych
 
-Wnioski:
+- **Wizualizacja:**
+- 
+
+----
+#Slajd 15: Histogram Box plot Rozkład cen za m2 
+
+- Kod:  
+  ```python
+          fig, ax = plt.subplots(figsize=(20, 6))
+        sns.boxplot(x='city', y='price_per_m2',
+                    data=df_buy_2024,
+                    palette='magma',
+                    ax=ax)
+        ax.set_title("Rozkład cen za m² mieszkań (zakup 2024) wg miast")
+        ax.set_ylabel("Cena [PLN/m²]")
+        ax.set_xlabel("Miasto")
+        plt.xticks(rotation=45, ha='right')
+
+        # definiujemy zakres osi Y 
+        y_min = df_buy_2024['price_per_m2'].min()
+        y_max = df_buy_2024['price_per_m2'].max()
+        yticks = np.linspace(y_min, y_max, 5)
+        ax.set_ylim(y_min, y_max)
+        ax.yaxis.set_major_locator(FixedLocator(yticks))
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, pos: f"{int(v)}"))
+        plt.tight_layout()
+        plt.show()
+  
+- Opis wykresu
+- Ten wykres pudełkowy prezentuje roczny zwrot z inwestycji (ROI) z wynajmu mieszkań w 14 polskich miastach. Dzięki boxplotowi możemy porównać nie tylko wartości średnie, ale też zakresy i zróżnicowanie ROI w każdym mieście. 
+- Opis do prezentacji
+- Tutaj widzimy wykres pudełkowy, który pokazuje, jak bardzo różnią się stopy zwrotu z najmu w zależności od miasta. Każde pudełko to 50% najczęstszych wartości – linia w środku to typowy zwrot roczny. Warszawa ma umiarkowany ROI, ale w Radomiu i Częstochowie opłacalność jest zdecydowanie wyższa. Z kolei Kraków i Białystok mają bardzo niskie wartości – tam inwestycje zwracają się znacznie wolniej. Dzięki tej formie prezentacji od razu widzimy też, jak bardzo zróżnicowane są miasta między sobą.
+  
+- Wnioski:
 Najwyższe stawki: Warszawa, Gdańsk
 Duża zmienność w miastach turystycznych
+
+- **Wizualizacja:**
+- 
+
 -----
 
-#Slajd 14: Rozkład powierzchni mieszkań
-Histogram squareMeters po imputacji
+#Slajd 15: Rozkład powierzchni mieszkań
+- Kod:  
+  ```python
+          plt.figure(figsize=(20, 6))
+        sns.histplot(df_buy_2024['squareMeters'],
+                     bins=20, kde=True)
+        plt.title("Rozkład powierzchni mieszkań po imputacji (df_buy_2024)")
+        plt.xlabel("Powierzchnia (m²)")
+        plt.ylabel("Liczba mieszkań")
+        plt.tight_layout()
+        plt.show()
 
-Główne wnioski:
+    from scipy.stats import chi2_contingency
+
+    def cramers_v(x, y):
+        contingency = pd.crosstab(x, y)
+        chi2, _, _, _ = chi2_contingency(contingency)
+        n = contingency.values.sum()
+        return np.sqrt(chi2 / (n * (min(contingency.shape) - 1)))
+
+- Opis wykresu
+- Wykres pokazuje, ile jest ofert mieszkań w poszczególnych miastach Polski (dane z 2024 r., po uzupełnieniu braków metodą hot-deck).
+- Opis do prezentacji
+- Ten wykres pokazuje, ile mieszkań znajduje się w naszym zbiorze danych w poszczególnych miastach Polski. Każdy słupek to konkretne miasto – im wyższy, tym więcej mieszkań. Zdecydowanie wyróżnia się Warszawa z największą liczbą ofert. Niebieska linia to krzywa gęstości – pokazuje ogólny trend, że najwięcej miast ma umiarkowaną liczbę mieszkań, a tylko nieliczne (jak Warszawa czy Kraków) wyraźnie odstają pod względem liczebności.
+
+- Główne wnioski:
 Większość mieszkań ma powierzchnię 30–60 m²
 Pojedyncze wartości skrajne (ponad 100 m²)
+
+
+-**Wizualizacja:**
+
 -----
 
-#Slajd 15: Korelacje liczbowych – Pearson & Spearman
+#Slajd 16: Korelacje liczbowych – Pearson
 Pearson – liniowa korelacja między zmiennymi liczbowymi
 
+- Kod:  
+  ```python
+   numeric = df_buy_2024.select_dtypes(include=[np.number])
+    pearson_m = numeric.corr(method='pearson')
+  
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(pearson_m, annot=True, fmt=".2f", cmap="coolwarm")
+    plt.title("Pearson – korelacja zmiennych (zakup 2024)")
+    plt.tight_layout(); plt.show()
+
+  
+- Opis Heatmap
+- To macierz korelacji Pearsona pokazująca, jak silnie są ze sobą powiązane różne cechy mieszkań oferowanych do zakupu w 2024 r. Korelacja pozwala ocenić, czy zmiany jednej cechy (np. powierzchni) mają wpływ na inną (np. cenę).
+- Opis do prezentacji
+- Na tej heatmapie  przedstawiamy korelacje między cechami mieszkań. Widzimy, że powierzchnia jest bardzo silnie powiązana z liczbą pokoi (0.81), co jest intuicyjne. Co ciekawe, cena za m² jest niemal niezależna od liczby pięter czy szerokości geograficznej, ale słabo ujemnie związana z liczbą punktów usługowych. Kolory kwadratów pomagają szybko rozróżnić, które cechy wpływają na siebie – na przykład ciemna czerwień przy squareMeters i rooms wskazuje silną korelację dodatnią.
+
+- Wnioski:
+Silna dodatnia korelacja: cena vs powierzchnia
+Zmienne ilościowe mają niską korelację między sobą poza price
+
+-**Wizualizacja:**
+
+-----
+#Slajd 17: Korelacje liczbowych – Spearman
 Spearman – korelacja rang (monotoniczna)
 
-Wnioski:
+- Kod:  
+  ```python
+  numeric = df_buy_2024.select_dtypes(include=[np.number])
+    spearman_m = numeric.corr(method='spearman')
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(spearman_m, annot=True, fmt=".2f", cmap="viridis")
+    plt.title("Spearman – korelacja rang zmiennych (zakup 2024)")
+    plt.tight_layout(); plt.show()
+
+- Opis Heatmap
+-  To macierz korelacji rang Spearmana, która pokazuje, jak silny i kierunkowy jest związek pomiędzy parami zmiennych opisujących oferty sprzedaży mieszkań. Korelacja rangowa uwzględnia nie tylko wartości liczbowe, ale też ich uporządkowanie (rangi) – dzięki czemu jest odporna na wartości odstające i dobrze sprawdza się przy cechach niemierzalnych liniowo.
+- Opis do prezentacji
+- Ten wykres pokazuje, jak mocno powiązane są ze sobą różne cechy mieszkań. Na przykład powierzchnia mieszkania silnie koreluje z liczbą pokoi – co jest intuicyjne. Widzimy też umiarkowany związek między metrażem a ceną. Co ciekawe, rok budowy wykazuje ujemny związek z liczbą POI – co może sugerować, że starsze budynki są zlokalizowane w bardziej rozwiniętej części miasta. Kolorystyka pomaga szybko dostrzec, które cechy wpływają na siebie silnie, a które pozostają niezależne.
+  
+- Wnioski:
 Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
 ------
 
-#Slajd 16: Cramér’s V – zmienne kategoryczne
+#Slajd 18: Cramér’s V – zmienne kategoryczne
 Miernik siły asocjacji między cechami nominalnymi
 Obliczony dla par kolumn kategorycznych
 Przykłady: city, district, street
 Ciepłe kolory = silniejsze powiązanie
+
+
 -----
 
-#Slajd 17: Kluczowe wnioski
+#Slajd 19: Kluczowe wnioski
 Dane wymagają czyszczenia i imputacji
 Miasta różnią się znacząco pod względem cen
 ROI może służyć jako wskaźnik inwestycyjny
@@ -262,7 +446,7 @@ Cena za m² – lepszy wskaźnik niż całkowita cena
 Warto wykorzystywać metryki statystyczne (kurtoza, korelacja) do identyfikacji outlierów
 ------
 
-#Slajd 18: Rekomendacje
+#Slajd 20: Rekomendacje
 Dla pośredników:
 Skupienie na miastach o niskim ROI przy sprzedaży
 Analiza outlierów dla nietypowych ofert
