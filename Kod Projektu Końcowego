@@ -131,6 +131,7 @@ def main():
         plt.figure(figsize=(12, 6))
         sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
         plt.title(title)
+        plt.savefig("moj-folder/zd 4.jpg")
         plt.show()
 
     # Boxplot cen zakupu (2024) - podstawowy
@@ -139,7 +140,6 @@ def main():
     plt.title("Ceny zakupu mieszkań w różnych miastach")
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    plt.savefig("moj-folder/zd 4.jpg")
     plt.show()
 
     #  Boxplot cen zakupu (2024) - z formatowaniem osi Y
