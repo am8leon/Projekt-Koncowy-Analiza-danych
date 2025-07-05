@@ -78,7 +78,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
 
 - **Wizualizacja:**
-![Ceny mieszkań w miastach](zd1.jpg)
+![Ceny mieszkań w miastach](image/zd1.jpg)
+
 
 **Notatka Braki w danych zakupu 2024:**  
 - Opis wykresu braki w danych zakupu 2024
