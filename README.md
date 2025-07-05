@@ -95,6 +95,9 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
         plt.title(title)
         plt.show()
 
+![Histogram czyszczenie ](zd1.jpg)
+
+
 - **Wizualizacja:**
   
 **Notatka Braki w danych  2023:**  
