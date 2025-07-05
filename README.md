@@ -449,7 +449,7 @@ Silna dodatnia korelacja: cena vs powierzchnia
 Zmienne ilościowe mają niską korelację między sobą poza price
 ------
 
-#Slajd 18: Cramér’s V – zmienne kategoryczne
+# Slajd 18: Cramér’s V – zmienne kategoryczne ilościowe
 
 - Kod:  
   ```python
@@ -477,7 +477,17 @@ Obliczony dla par kolumn kategorycznych
 Przykłady: city, district, street
 Ciepłe kolory = silniejsze powiązanie
 -----
+# Slajd 18: Cramér’s V – zmienne kategoryczne jakościowe 
 
+- Kod:  
+  ```python
+  
+
+
+- Opis 
+- Opis do prezentacji
+
+------
 # Slajd 19: Kluczowe wnioski
 
 -**Wnioski:**
