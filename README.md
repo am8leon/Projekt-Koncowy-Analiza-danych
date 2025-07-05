@@ -41,7 +41,9 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
   - Standaryzacja nazw miast (`clean_city_column()`)  
   - Identyfikacja braków i imputacja:  
     - Mediana dla liczb  
-    - Hot-deck dla `area` w ramach miasta  
+    - Hot-deck dla `area` w ramach miasta
+Kod:
+dfs[key] = read_csv_with_fallback(path)
 
 ---
 
