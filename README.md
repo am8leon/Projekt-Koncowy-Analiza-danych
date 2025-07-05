@@ -21,12 +21,13 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
 
 ---
 
-# Slajd 3: Cel analizy  
-- Zrozumieć, jak kształtują się ceny mieszkań na rynku sprzedaży i wynajmu  
-- Identyfikować różnice cenowe pomiędzy miastami  
+# Slajd 3: Cel analizy
+- Cel analizy 
+Celem projektu było zbadanie rynku mieszkaniowego w Polsce na podstawie danych o wynajmie oraz zakupie mieszkań w latach 2023–2024.
+Założeniem było zrosumieć i porównać struktury ofert, poziomu cen i różnic międzymiastowych, a także ocena opłacalności inwestycji w najem względem zakupu. I jak kształtują się ceny mieszkań na rynku sprzedaży i wynajmu
+-Do analizy wykorzystano zbiór ofert z kilkunastu miast (m.in. Warszawa, Kraków, Gdańsk, Wrocław) zawierający informacje o powierzchni, liczbie pokoi, cenie, odległościach od kluczowych punktów usługowych oraz cechach budynku.
 - Weryfikować, które cechy (powierzchnia, lokalizacja) mają największy wpływ  
-- Zbudować prosty model predykcyjny ceny  
-- Przygotować rekomendacje dla pośredników i inwestorów  
+- Przygotować rekomendacje dla pośredników i inwestorów
 
 ---
 
@@ -38,7 +39,10 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
   - Automatyczne wykrywanie kodowania (chardet)  
   - Separator `;` lub `,`  
 - **Czyszczenie**:  
-  - Standaryzacja nazw miast (`clean_city_column()`)  
+  - Standaryzacja nazw miast (`clean_city_column()`)
+  - Przed dalszymi krokami wykonano:
+    •	wykrycie i kwantyfikację braków danych,
+    •	imputację brakujących wartości metodą hot-deck,
   - Identyfikacja braków i imputacja:  
     - Mediana dla liczb  
     - Hot-deck dla `area` w ramach miasta
@@ -51,7 +55,7 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
   ```python
   def clean_city_column(df):
     df['city'] = df['city'].str.strip().str.title()
-- Imputacja::
+- Imputacja:
 - Kod:  
   ```python
   df[num_cols] = df[num_cols].fillna(df[num_cols].median())
@@ -65,8 +69,17 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
 | Zakup 2024        | heatmap(isnull)                | Skala braków przed imputacją         |
 | Zakup 2023        | heatmap(isnull)                | Wskaźnik jakości danych              |
 
-**Speaker notes:**  
-„Długie pasy wartości True to kolumny, które wymagają uzupełnienia.”  
+- Heatmapy braków:
+- Kod:  
+  ```python
+  sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+
+**Notatka:**  
+-Opis wykresu braki w danych wynajmu
+- Ten wykres jest tzw. mapą braków danych (missing values map), która pokazuje gdzie i w jakich zmiennych brakuje informacji w bazie dotyczącej mieszkań na wynajem. Wykres pozwala ocenić, czy problem brakujących wartości jest rozproszony czy skumulowany w konkretnych kolumnach.
+- Opis do prezentacji 
+Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda kolumna to jedna zmienna, a każdy wiersz to jedna oferta. Czerwone kreski wskazują miejsca, gdzie brakuje informacji — na przykład, dla wielu mieszkań nie podano typu budynku czy formy własności. Z kolei dane o lokalizacji, czyli długość i szerokość geograficzna, są niemal kompletne. Dzięki temu możemy lepiej zaplanować dalszą analizę – czy należy uzupełniać brakujące dane, czy pomijać niektóre zmienne.”
+  
 
 ---
 
