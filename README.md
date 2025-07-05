@@ -97,7 +97,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 
 
 - **Wizualizacja:**
-![Histogram czyszczenie ](zd1.jpg)
+![Ceny mieszkań w miastach](images/zd1.jpg)
+
   
 **Notatka Braki w danych  2023:**  
 - Opis wykresu braki w danych zakupu 2023
