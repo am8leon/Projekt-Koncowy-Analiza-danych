@@ -131,7 +131,7 @@ def main():
         plt.figure(figsize=(12, 6))
         sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
         plt.title(title)
-        plt.savefig("moj-folder/zd 4.jpg")
+        plt.savefig("moj-folder/zd 1.jpg")
         plt.show()
 
     # Boxplot cen zakupu (2024) - podstawowy
