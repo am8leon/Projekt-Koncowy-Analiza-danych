@@ -99,7 +99,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - **Wizualizacja:**
 ![Histogram czyszczenie ](zd1.jpg)
 
-![Histogram czyszczenie](images/zd1.jpg)
+![Histogram czyszczenie](image/zd1.jpg)
 
 
   
