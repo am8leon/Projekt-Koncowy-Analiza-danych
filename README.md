@@ -42,7 +42,8 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
   - Identyfikacja braków i imputacja:  
     - Mediana dla liczb  
     - Hot-deck dla `area` w ramach miasta
-Kod:
+- Kod:  
+  ```python
 dfs[key] = read_csv_with_fallback(path)
 
 ---
