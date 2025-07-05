@@ -481,11 +481,31 @@ Ciepłe kolory = silniejsze powiązanie
 
 - Kod:  
   ```python
-  
-
-
-- Opis 
+  # Korelacja jakościowa – Cramér’s V
+  cat_cols = df_buy_2024.select_dtypes(include=['object', 'category']).columns.tolist()
+  n = len(cat_cols)
+  cramer_matrix = pd.DataFrame(np.zeros((n, n)), index=cat_cols, columns=cat_cols)
+  for i, c1 in enumerate(cat_cols):
+  for j, c2 in enumerate(cat_cols):
+        if i <= j:
+            v = cramers_v(df_buy_2024[c1], df_buy_2024[c2])
+            cramer_matrix.loc[c1, c2] = v
+            cramer_matrix.loc[c2, c1] = v
+  plt.figure(figsize=(10, 8))
+  sns.heatmap(
+    cramer_matrix,
+    annot=True,
+    fmt=".2f",
+    cmap="YlGnBu",
+    cbar_kws={'label': "Cramér’s V"}
+  )
+  plt.title("Macierz korelacji zmiennych jakościowych (Cramér’s V)")
+  plt.tight_layout()
+  plt.show()
+- Opis
+- To macierz korelacji Cramér’s V, używana do oceny siły związku między zmiennymi jakościowymi (kategorycznymi) opisującymi cechy mieszkań oraz lokalizacji. Umożliwia szybkie wychwycenie, które cechy współwystępują ze sobą, a które są niezależne.
 - Opis do prezentacji
+- Na tym wykresie mamy macierz korelacji Craméra – pokazuje ona siłę związku między zmiennymi jakościowymi. Na przykład bardzo silny związek występuje między długością geograficzną a odległością od centrum – co jest logiczne, bo lokalizacja wpływa na centralność mieszkania. Z kolei wyposażenie jak balkon czy komórka lokatorska występują raczej niezależnie od innych cech. Kolorystycznie ciemniejsze pola wskazują na silniejsze współwystępowanie dwóch cech. To pozwala wychwycić powiązania między atrybutami, które często nie są widoczne w tradycyjnej tabeli.
 
 ------
 # Slajd 19: Kluczowe wnioski
