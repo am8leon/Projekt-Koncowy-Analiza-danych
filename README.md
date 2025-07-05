@@ -169,7 +169,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Opis do prezentacji
 - Na tym wykresie zobaczymy, jak cechy mieszkań wpływają na siebie nawzajem. Intensywny czerwony kolor między metrażem a liczbą pokoi (0.81) pokazuje , że większe mieszkania mają więcej pokoi – co jest intuicyjne. Ciekawostką jest ujemna korelacja między rokiem budowy a szerokością geograficzną – nowe budynki są częściej zlokalizowane bardziej na południu. To zestawienie pozwala szybko wyłapać, które cechy mogą się wzajemnie przewidywać i jakie zależności istnieją między lokalizacją, powierzchnią a ceną.
 - **Wizualizacja:**
-- 
+
 -----
 
 # Slajd 9: Minimalne i maksymalne ceny
@@ -293,7 +293,7 @@ Miasta z niskim ROI:
 Warszawa, Gdańsk, Kraków
 
 - **Wizualizacja:**
-- 
+
 -----
 # Slajd 14: Wykres średniej ceny za m²
 
@@ -326,7 +326,7 @@ Najwyższe stawki: Warszawa, Gdańsk , Kraków
 Duża zmienność w miastach turystycznych
 
 - **Wizualizacja:**
-- 
+
 
 ----
 # Slajd 15: Histogram Box plot Rozkład cen za m2 
@@ -363,7 +363,7 @@ Najwyższe stawki: Warszawa, Gdańsk
 Duża zmienność w miastach turystycznych
 
 - **Wizualizacja:**
-- 
+  
 
 -----
 
@@ -450,20 +450,44 @@ Zmienne ilościowe mają niską korelację między sobą poza price
 ------
 
 #Slajd 18: Cramér’s V – zmienne kategoryczne
+
+- Kod:  
+  ```python
+  cat_cols = df_buy_2024.select_dtypes(include=['object', 'category']).columns
+    cramer_df = pd.DataFrame(index=cat_cols, columns=cat_cols, dtype=float)
+    for c1 in cat_cols:
+        for c2 in cat_cols:
+            cramer_df.loc[c1, c2] = cramers_v(df_buy_2024[c1], df_buy_2024[c2])
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(cramer_df.astype(float), annot=True, fmt=".2f", cmap="magma")
+    plt.title("Cramér’s V – asocjacja zmiennych kategorycznych")
+    plt.tight_layout(); plt.show()
+
+- Opis
+- To macierz korelacji Cramér's V — czyli wykres pokazujący siłę powiązań (asocjacji) pomiędzy różnymi zmiennymi kategorycznymi opisującymi mieszkania w zbiorze sprzedażowym. Cramér’s V przyjmuje wartości od 0 do 1:
+0 – brak zależności
+1 – pełna, silna zależność
+- Opis do prezentacji
+- Na tym wykresie zobaczymy, jak bardzo różne cechy mieszkań są ze sobą powiązane. Im jaśniejszy kwadrat, tym silniejszy związek. Na przykład, długość geograficzna i odległość od centrum mają niemal idealną korelację (0.99), co może świadczyć o geograficznej charakterystyce miast. Inne silne zależności pojawiają się między odległościami od usług — szkoły, restauracje czy apteki często zlokalizowane są blisko siebie. Dzięki kolorom i wartościom możemy szybko rozpoznać, które cechy mogą się wzajemnie tłumaczyć i wspierać w modelach analitycznych.
+
+-Wnioski:
 Miernik siły asocjacji między cechami nominalnymi
 Obliczony dla par kolumn kategorycznych
 Przykłady: city, district, street
 Ciepłe kolory = silniejsze powiązanie
-
-
 -----
 
 # Slajd 19: Kluczowe wnioski
-Dane wymagają czyszczenia i imputacji
-Miasta różnią się znacząco pod względem cen
-ROI może służyć jako wskaźnik inwestycyjny
-Cena za m² – lepszy wskaźnik niż całkowita cena
-Warto wykorzystywać metryki statystyczne (kurtoza, korelacja) do identyfikacji outlierów
+
+-**Wnioski:**
+Kluczowe wnioski
+•	Rynek najmu: średnia stawka 3 700 PLN, duże zróżnicowanie cen (IQR 415–4 000 PLN), najwyższe w Warszawie i Trójmieście.
+•	Rynek zakupu: średnia cena wzrosła tylko o 1,4 % r/r do ok. 824 tys. PLN, silna prawoskośność (oferty >3 mln PLN głównie w największych miastach).
+•	Cena a metraż: współczynnik Pearsona 0,67 – wielkość mieszkania to najsilniejszy determinant ceny; liczba pokoi również istotna (0,50).
+•	Ceny za m²: od ok. 6 900 PLN (Radom, Białystok) do ponad 17 500 PLN (Warszawa).
+•	ROI najmu vs zakupu: bardzo niski (średnio 0,25 % rocznie), z najwyższym zwrotem w mniejszych ośrodkach (Radom, Bydgoszcz).
+
 ------
 
 # Slajd 20: Rekomendacje
