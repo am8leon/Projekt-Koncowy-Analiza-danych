@@ -76,10 +76,6 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
--
--kod:
-   ```python
-  ![Ceny mieszkań w miastach](zd 1.jpg)
 
 - **Wizualizacja:**
 
