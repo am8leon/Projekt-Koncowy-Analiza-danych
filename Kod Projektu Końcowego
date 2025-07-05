@@ -46,9 +46,9 @@ def read_csv_with_fallback(filepath,
 
 
 def clean_city_column(df):
-    
-    #Usuwa nadmiarowe spacje, standaryzuje wielkość liter w kolumnie 'city'.
-    
+    """
+    Usuwa nadmiarowe spacje, standaryzuje wielkość liter w kolumnie 'city'.
+    """
     if 'city' in df.columns:
         df['city'] = (df['city']
                       .astype(str)
@@ -61,9 +61,9 @@ def clean_city_column(df):
 
 
 def impute_city_most_frequent(df):
-    
-    #Imputuje brakujące wartości w kolumnie 'city' najczęściej występującą wartością.
-    
+    """
+    Imputuje brakujące wartości w kolumnie 'city' najczęściej występującą wartością.
+    """
     if 'city' in df.columns:
         mode = df['city'].mode(dropna=True)
         if not mode.empty:
@@ -131,7 +131,6 @@ def main():
         plt.figure(figsize=(12, 6))
         sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
         plt.title(title)
-        plt.savefig("image/zd 1.jpg")
         plt.show()
 
     # Boxplot cen zakupu (2024) - podstawowy
@@ -281,7 +280,7 @@ def main():
         ax.set_xlabel("Miasto")
         plt.xticks(rotation=45, ha='right')
 
-        # definiujemy zakres osi Y 
+        # definiujemy zakres osi Y i ticki
         y_min = df_buy_2024['price_per_m2'].min()
         y_max = df_buy_2024['price_per_m2'].max()
         yticks = np.linspace(y_min, y_max, 5)
@@ -326,7 +325,7 @@ def main():
     plt.title("Spearman – korelacja rang zmiennych (zakup 2024)")
     plt.tight_layout(); plt.show()
 
-    # 2) Cramér’s V dla zmiennych kategorycznych
+    # Cramér’s V dla zmiennych kategorycznych
     cat_cols = df_buy_2024.select_dtypes(include=['object', 'category']).columns
     cramer_df = pd.DataFrame(index=cat_cols, columns=cat_cols, dtype=float)
     for c1 in cat_cols:
@@ -338,6 +337,30 @@ def main():
     plt.title("Cramér’s V – asocjacja zmiennych kategorycznych")
     plt.tight_layout(); plt.show()
 
-    
+    # Korelacja jakościowa – Cramér’s V
+cat_cols = df_buy_2024.select_dtypes(include=['object', 'category']).columns.tolist()
+
+n = len(cat_cols)
+cramer_matrix = pd.DataFrame(np.zeros((n, n)), index=cat_cols, columns=cat_cols)
+
+for i, c1 in enumerate(cat_cols):
+    for j, c2 in enumerate(cat_cols):
+        if i <= j:
+            v = cramers_v(df_buy_2024[c1], df_buy_2024[c2])
+            cramer_matrix.loc[c1, c2] = v
+            cramer_matrix.loc[c2, c1] = v
+
+plt.figure(figsize=(10, 8))
+sns.heatmap(
+    cramer_matrix,
+    annot=True,
+    fmt=".2f",
+    cmap="YlGnBu",
+    cbar_kws={'label': "Cramér’s V"}
+)
+plt.title("Macierz korelacji zmiennych jakościowych (Cramér’s V)")
+plt.tight_layout()
+plt.show()
+
 if __name__ == "__main__":
     main()
