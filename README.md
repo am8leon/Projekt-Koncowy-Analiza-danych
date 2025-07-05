@@ -76,6 +76,9 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+  plt.savefig("moj-folder/zd4.jpg")
+  ![Opis](moj-folder/zd4.jpg)
+
 
 - **Wizualizacja:**
 
