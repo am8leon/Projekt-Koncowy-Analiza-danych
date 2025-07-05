@@ -1,2 +1,0 @@
-Wykres czyszczenie danych
-![Hisogram czysczenie danych](images/zd 1.jpg)
