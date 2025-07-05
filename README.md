@@ -79,7 +79,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   
 - Kod:  
   ```python
-  ![Histogram braków](moj-folder/zd 1.jpg)
+  ![Histogram braków](image/zd 1.jpg)
 
 
 - **Wizualizacja:**
