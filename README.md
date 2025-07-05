@@ -42,9 +42,19 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
   - Identyfikacja braków i imputacja:  
     - Mediana dla liczb  
     - Hot-deck dla `area` w ramach miasta
+- Wczytywanie:
 - Kod:  
   ```python
-dfs[key] = read_csv_with_fallback(path)
+  dfs[key] = read_csv_with_fallback(path)
+- Czyszczenie miast:
+- Kod:  
+  ```python
+  def clean_city_column(df):
+    df['city'] = df['city'].str.strip().str.title()
+- Imputacja::
+- Kod:  
+  ```python
+  df[num_cols] = df[num_cols].fillna(df[num_cols].median())
 
 ---
 
