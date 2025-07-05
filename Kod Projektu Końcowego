@@ -1,0 +1,342 @@
+import os
+import chardet
+import warnings
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from matplotlib.ticker import FuncFormatter, ScalarFormatter, FixedLocator
+from google.colab import drive
+from IPython.display import display
+
+# Ustawienia wyświetlania Pandas - pokazujemy max 10 wierszy i 20 kolumn
+pd.set_option('display.max_rows', 10)
+pd.set_option('display.max_columns', 20)
+
+
+def read_csv_with_fallback(filepath,
+                           encodings=None,
+                           delimiters=None):
+
+
+    if encodings is None:
+        encodings = ["utf-8", "utf-8-sig", "latin1", "cp1250", "iso-8859-2"]
+    if delimiters is None:
+        delimiters = [';', ',']
+
+    # Wstępne wykrycie kodowania pierwszych 10000 bajtów
+    with open(filepath, 'rb') as f:
+        raw = f.read(10000)
+    detected = chardet.detect(raw)
+    print(f"Detected encoding: {detected['encoding']} for {os.path.basename(filepath)}")
+
+    # Próba różnych kodowań i separatorów
+    for enc in encodings:
+        for sep in delimiters:
+            try:
+                df = pd.read_csv(filepath, encoding=enc, sep=sep)
+                print(f"Loaded {os.path.basename(filepath)} with encoding={enc}, sep='{sep}'")
+                return df
+            except Exception:
+                continue
+
+    raise ValueError(f"Nie udało się wczytać {filepath} żadnym z dostępnych kodowań.")
+
+
+def clean_city_column(df):
+    """
+    Usuwa nadmiarowe spacje, standaryzuje wielkość liter w kolumnie 'city'.
+    """
+    if 'city' in df.columns:
+        df['city'] = (df['city']
+                      .astype(str)
+                      .str.strip()
+                      .str.title()
+                      .replace({'Nan': pd.NA}))
+    else:
+        warnings.warn("Brak kolumny 'city' w danych.")
+    return df
+
+
+def impute_city_most_frequent(df):
+    """
+    Imputuje brakujące wartości w kolumnie 'city' najczęściej występującą wartością.
+    """
+    if 'city' in df.columns:
+        mode = df['city'].mode(dropna=True)
+        if not mode.empty:
+            df['city'].fillna(mode[0], inplace=True)
+    return df
+
+
+def main():
+    warnings.filterwarnings('ignore')
+
+    #  montujemy Dysk Google
+    try:
+        drive.mount('/content/drive')
+        base_dir = "/content/drive/MyDrive/dataset2/"
+    except Exception:
+        print("Nie mam Dysku Google — kontynuuję lokalnie.")
+        base_dir = "./dataset2/"
+
+
+    # Nazwy plików
+    files = {
+        'rent':     "apartments_rent_pl_2024_06.csv",
+        'buy_2024': "apartments_pl_2024_06.csv",
+        'buy_2023': "apartments_pl_2023_12.csv"
+    }
+
+
+    # Wczytywanie danych
+    dfs = {}
+    for key, fname in files.items():
+        path = os.path.join(base_dir, fname)
+        try:
+            dfs[key] = read_csv_with_fallback(path)
+        except Exception as e:
+            raise RuntimeError(f"Błąd wczytywania {fname}: {e}")
+
+    df_rent     = dfs['rent']
+    df_buy_2024 = dfs['buy_2024']
+    df_buy_2023 = dfs['buy_2023']
+
+
+    # Czyszczenie kolumny 'city' i imputacja
+    for df in (df_rent, df_buy_2024, df_buy_2023):
+        df = clean_city_column(df)
+        df = impute_city_most_frequent(df)
+
+    # Konwersja kolumn numerycznych i imputacja medianą
+    for df in (df_rent, df_buy_2024, df_buy_2023):
+        # wymuszenie liczbowego formatu ceny
+        df['price'] = pd.to_numeric(df['price'], errors='coerce')
+        # jeśli jest kolumna 'squareMeters', również ją konwertujemy
+        if 'squareMeters' in df.columns:
+            df['squareMeters'] = pd.to_numeric(df['squareMeters'], errors='coerce')
+
+        # imputacja mediana dla wszystkich kolumn liczbowych
+        num_cols = df.select_dtypes(include=[np.number]).columns
+        df[num_cols] = df[num_cols].fillna(df[num_cols].median())
+
+    # Heatmapy braków danych
+    for df, title in [
+        (df_rent,     "Braki w danych wynajmu"),
+        (df_buy_2024, "Braki w danych zakupu 2024"),
+        (df_buy_2023, "Braki w danych zakupu 2023"),
+    ]:
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+        plt.title(title)
+        plt.show()
+
+    # Boxplot cen zakupu (2024) - podstawowy
+    plt.figure(figsize=(20, 7))
+    sns.boxplot(x="city", y="price", data=df_buy_2024)
+    plt.title("Ceny zakupu mieszkań w różnych miastach")
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+    #  Boxplot cen zakupu (2024) - z formatowaniem osi Y
+    fig, ax = plt.subplots(figsize=(20, 7))
+    sns.boxplot(x="city", y="price", data=df_buy_2024, ax=ax)
+    ax.set_title("Ceny zakupu mieszkań w różnych miastach")
+    ax.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
+    ax.ticklabel_format(style='plain', axis='y')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+    # Boxplot cen wynajmu
+    plt.figure(figsize=(20, 7))
+    sns.boxplot(x="city", y="price", data=df_rent)
+    plt.title("Ceny wynajmu mieszkań w różnych miastach")
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+    # Korelacja zmiennych dla zakupów 2024
+    corr = df_buy_2024.select_dtypes(include=[np.number]).corr()
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
+    plt.title("Korelacja zmiennych dla danych o zakupie 2024")
+    plt.tight_layout()
+    plt.show()
+
+
+    #  Minimalne i maksymalne ceny mieszkań wg miast
+    mm = df_buy_2024.groupby('city')['price'].agg(['min', 'max']).reset_index()
+    r = np.arange(len(mm))
+    width = 0.35
+
+    fig, ax = plt.subplots(figsize=(20, 7))
+    bars_min = ax.bar(r - width/2, mm['min'], width, label="Min")
+    bars_max = ax.bar(r + width/2, mm['max'], width, label="Max")
+    ax.set_xticks(r)
+    ax.set_xticklabels(mm['city'], rotation=45, ha='right')
+    ax.set_ylabel("Cena [PLN]")
+    ax.set_title("Minimalne i Maksymalne ceny mieszkań wg miast")
+    ax.legend()
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, pos: f"{int(v):,}".replace(",", " ")))
+
+    for bar in list(bars_min) + list(bars_max):
+        h = int(bar.get_height())
+        ax.annotate(
+            f"{h:,}".replace(",", " "),
+            xy=(bar.get_x() + bar.get_width()/2, h),
+            xytext=(0, 3), textcoords="offset points",
+            ha='center', va='bottom', fontsize=9
+        )
+
+    plt.tight_layout()
+    plt.show()
+
+    # Kurtoza cen wg miast (zakup 2024)
+    kurtosis_price = df_buy_2024.groupby('city')['price'] \
+        .apply(lambda x: x.kurtosis()) \
+        .reset_index(name="Kurtoza")
+    plt.figure(figsize=(20, 7))
+    sns.barplot(x="city", y="Kurtoza", data=kurtosis_price)
+    plt.title("Kurtoza cen mieszkań wg miast (zakup 2024)")
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+    # Statystyki opisowe – heatmapy
+    for df, cmap, title in [
+        (df_rent,     "YlGnBu", "Statystyki opisowe dla wynajmu"),
+        (df_buy_2024, "YlOrRd", "Statystyki opisowe dla zakupu 2024"),
+        (df_buy_2023, "BuPu",   "Statystyki opisowe dla zakupu 2023"),
+    ]:
+        stats = df.describe().transpose()
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(stats, annot=True, cmap=cmap, fmt=".2f")
+        plt.title(title)
+        plt.tight_layout()
+        plt.show()
+
+    #  ROI: mediana czynszu / mediana ceny zakupu
+    rent_med = df_rent.groupby("city")["price"].median()
+    buy_med  = df_buy_2024.groupby("city")["price"].median()
+    roi      = (rent_med / buy_med * 100).sort_values(ascending=False)
+
+    plt.figure(figsize=(20, 7))
+    sns.barplot(x=roi.index, y=roi.values)
+    plt.title("Opłacalność wynajmu względem zakupu (%)")
+    plt.xlabel("Miasto")
+    plt.ylabel("ROI (%)")
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
+    plt.show()
+
+
+    #  Statystyki i wykresy ceny za m²
+    if 'squareMeters' in df_buy_2024.columns:
+        df_buy_2024['price_per_m2'] = df_buy_2024['price'] / df_buy_2024['squareMeters']
+
+        # tabela statystyk
+        stats_m2 = df_buy_2024.groupby('city')['price_per_m2'] \
+            .agg(['mean', 'median', 'min', 'max']) \
+            .rename(columns={
+                'mean':   'Średnia',
+                'median': 'Mediana',
+                'min':    'Min',
+                'max':    'Max'
+            }).reset_index()
+        print("Statystyki ceny za m² dla zakupu 2024 wg miast:")
+        display(stats_m2)
+
+        # wykres słupkowy średniej ceny za m²
+        fig, ax = plt.subplots(figsize=(20, 6))
+        sns.barplot(x='city', y='Średnia', data=stats_m2,
+                    palette='viridis', ax=ax)
+        ax.set_title("Średnia cena za m² mieszkania (zakup 2024) wg miast")
+        ax.set_ylabel("Cena [PLN/m²]")
+        ax.set_xlabel("Miasto")
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, pos: f"{int(v):,}".replace(",", " ")))
+        plt.xticks(rotation=45, ha='right')
+        for p in ax.patches:
+            h = int(p.get_height())
+            ax.annotate(
+                f"{h:,}".replace(",", " "),
+                (p.get_x() + p.get_width() / 2, h),
+                ha='center', va='bottom', fontsize=9
+            )
+        plt.tight_layout()
+        plt.show()
+
+        # boxplot rozkładu cen za m²
+        fig, ax = plt.subplots(figsize=(20, 6))
+        sns.boxplot(x='city', y='price_per_m2',
+                    data=df_buy_2024,
+                    palette='magma',
+                    ax=ax)
+        ax.set_title("Rozkład cen za m² mieszkań (zakup 2024) wg miast")
+        ax.set_ylabel("Cena [PLN/m²]")
+        ax.set_xlabel("Miasto")
+        plt.xticks(rotation=45, ha='right')
+
+        # definiujemy zakres osi Y i ticki
+        y_min = df_buy_2024['price_per_m2'].min()
+        y_max = df_buy_2024['price_per_m2'].max()
+        yticks = np.linspace(y_min, y_max, 5)
+        ax.set_ylim(y_min, y_max)
+        ax.yaxis.set_major_locator(FixedLocator(yticks))
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, pos: f"{int(v)}"))
+        plt.tight_layout()
+        plt.show()
+
+        # histogram: rozkład powierzchni mieszkań
+        plt.figure(figsize=(20, 6))
+        sns.histplot(df_buy_2024['squareMeters'],
+                     bins=20, kde=True)
+        plt.title("Rozkład powierzchni mieszkań po imputacji (df_buy_2024)")
+        plt.xlabel("Powierzchnia (m²)")
+        plt.ylabel("Liczba mieszkań")
+        plt.tight_layout()
+        plt.show()
+
+
+
+    from scipy.stats import chi2_contingency
+
+    def cramers_v(x, y):
+        contingency = pd.crosstab(x, y)
+        chi2, _, _, _ = chi2_contingency(contingency)
+        n = contingency.values.sum()
+        return np.sqrt(chi2 / (n * (min(contingency.shape) - 1)))
+
+    # 1) Korelacje Pearsona i Spearmana
+    numeric = df_buy_2024.select_dtypes(include=[np.number])
+    pearson_m = numeric.corr(method='pearson')
+    spearman_m = numeric.corr(method='spearman')
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(pearson_m, annot=True, fmt=".2f", cmap="coolwarm")
+    plt.title("Pearson – korelacja zmiennych (zakup 2024)")
+    plt.tight_layout(); plt.show()
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(spearman_m, annot=True, fmt=".2f", cmap="viridis")
+    plt.title("Spearman – korelacja rang zmiennych (zakup 2024)")
+    plt.tight_layout(); plt.show()
+
+    # 2) Cramér’s V dla zmiennych kategorycznych
+    cat_cols = df_buy_2024.select_dtypes(include=['object', 'category']).columns
+    cramer_df = pd.DataFrame(index=cat_cols, columns=cat_cols, dtype=float)
+    for c1 in cat_cols:
+        for c2 in cat_cols:
+            cramer_df.loc[c1, c2] = cramers_v(df_buy_2024[c1], df_buy_2024[c2])
+
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(cramer_df.astype(float), annot=True, fmt=".2f", cmap="magma")
+    plt.title("Cramér’s V – asocjacja zmiennych kategorycznych")
+    plt.tight_layout(); plt.show()
+
+
+if __name__ == "__main__":
+    main()
