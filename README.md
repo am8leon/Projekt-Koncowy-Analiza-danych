@@ -2,46 +2,11 @@
 Projekt Analiza Danych mieszkania 
 Analiza cen mieszkań — wynajem i zakup (2023–2024)
 
-Ten projekt służy do analizy danych dotyczących wynajmu i zakupu mieszkań w Polsce w latach 2023–2024. Analiza obejmuje czyszczenie danych, imputację braków, generowanie wizualizacji oraz wyliczenia wskaźników takich jak ROI czy korelacje między zmiennymi.
 
-Zawartość
-
-Automatyczne wykrywanie kodowania i separatorów plików CSV
-
-Czyszczenie i standaryzacja danych (kolumna city, brakujące wartości)
-
-Statystyki opisowe i wizualizacje (heatmapy, boxploty, słupki)
-
-Obliczanie opłacalności inwestycji (ROI)
-
-Korelacje (Pearson, Spearman, Cramér's V)
-
-Obsługa danych z Google Drive (Google Colab) lub lokalnie
-
-Wymagania
-
-Aby uruchomić projekt, potrzebujesz:
-
-Python 3.7+
-
-Biblioteki:
-
-pandas
-
-numpy
-
-matplotlib
-
-seaborn
-
-chardet
-
-scipy
-
-google.colab (opcjonalnie, jeśli korzystasz z Colab)
 # Slajd 1: Tytuł  
-**Analiza cen mieszkań w Polsce**  
-Adam, Gdynia • 27.06.2025  
+**Projekt-Koncowy-Analiza-danych
+Projekt Analiza Danych mieszkania 
+Analiza cen mieszkań — wynajem i zakup (2023–2024)
 
 ---
 
@@ -110,3 +75,119 @@ Adam, Gdynia • 27.06.2025
   ```python
   df_corr = numeric_df.corr()
   sns.heatmap(df_corr, annot=True, cmap="coolwarm")
+
+# Slajd 8: Minimalne i maksymalne ceny
+Porównanie minimalnych i maksymalnych cen zakupu mieszkań w 2024 roku
+
+Wykres słupkowy barplot z adnotacjami
+
+Wnioski:
+
+Znaczne różnice w rozrzucie cen pomiędzy miastami
+
+Warszawa i Kraków – najwyższe ceny maksymalne
+
+#Slajd 9: Kurtoza cen wg miast
+Kurtoza: miara „spiczastości” rozkładu
+
+Obliczona dla price w danych zakupu 2024
+
+Wnioski:
+
+Miasta o wysokiej kurtozie mają więcej ekstremalnych cen
+
+Pozwala identyfikować rynki niestabilne lub spekulacyjne
+
+#Slajd 10: Statystyki opisowe (heatmapy)
+Heatmapy statystyk describe()
+
+Dla zbiorów: wynajem, zakup 2024 i 2023
+
+Ułatwiają szybkie porównanie rozkładów cech liczbowych
+
+Skala kolorów: min–max dla każdej cechy
+
+#Slajd 11: ROI – opłacalność wynajmu
+Mediana czynszu / Mediana ceny zakupu × 100%
+
+ROI wyrażony procentowo – ile wynosi roczny zwrot z inwestycji
+
+Najbardziej opłacalne miasta:
+
+Gorzów Wlkp., Bydgoszcz, Rzeszów
+
+Miasta z niskim ROI:
+
+Warszawa, Gdańsk, Kraków
+
+#Slajd 12: Cena za m² – statystyki i wykresy
+Dodano kolumnę price_per_m2
+
+Statystyki: średnia, mediana, min, max
+
+Wykresy:
+
+Barplot średniej ceny za m²
+
+Boxplot rozkładu cen za m² wg miast
+
+Wnioski:
+
+Najwyższe stawki: Warszawa, Gdańsk
+
+Duża zmienność w miastach turystycznych
+
+#Slajd 13: Rozkład powierzchni mieszkań
+Histogram squareMeters po imputacji
+
+Główne wnioski:
+
+Większość mieszkań ma powierzchnię 30–60 m²
+
+Pojedyncze wartości skrajne (ponad 100 m²)
+
+#Slajd 14: Korelacje liczbowych – Pearson & Spearman
+Pearson – liniowa korelacja między zmiennymi liczbowymi
+
+Spearman – korelacja rang (monotoniczna)
+
+Wnioski:
+
+Silna dodatnia korelacja: cena vs powierzchnia
+
+Zmienne ilościowe mają niską korelację między sobą poza price
+
+#Slajd 15: Cramér’s V – zmienne kategoryczne
+Miernik siły asocjacji między cechami nominalnymi
+
+Obliczony dla par kolumn kategorycznych
+
+Przykłady: city, district, street
+
+Ciepłe kolory = silniejsze powiązanie
+
+#Slajd 16: Kluczowe wnioski
+Dane wymagają czyszczenia i imputacji
+
+Miasta różnią się znacząco pod względem cen
+
+ROI może służyć jako wskaźnik inwestycyjny
+
+Cena za m² – lepszy wskaźnik niż całkowita cena
+
+Warto wykorzystywać metryki statystyczne (kurtoza, korelacja) do identyfikacji outlierów
+
+#Slajd 17: Rekomendacje
+Dla pośredników:
+
+Skupienie na miastach o niskim ROI przy sprzedaży
+
+Analiza outlierów dla nietypowych ofert
+
+Dla inwestorów:
+
+Priorytet dla miast o wysokim ROI
+
+Uwzględnianie cen za m², nie tylko całkowitych cen
+
+
