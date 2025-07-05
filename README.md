@@ -72,6 +72,7 @@ Założeniem było zrosumieć i porównać struktury ofert, poziomu cen i różn
 - Ten wykres jest tzw. mapą braków danych (missing values map), która pokazuje gdzie i w jakich zmiennych brakuje informacji w bazie dotyczącej mieszkań na wynajem. Wykres pozwala ocenić, czy problem brakujących wartości jest rozproszony czy skumulowany w konkretnych kolumnach.
 - Opis do prezentacji 
 Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda kolumna to jedna zmienna, a każdy wiersz to jedna oferta. Czerwone kreski wskazują miejsca, gdzie brakuje informacji — na przykład, dla wielu mieszkań nie podano typu budynku czy formy własności. Z kolei dane o lokalizacji, czyli długość i szerokość geograficzna, są niemal kompletne. Dzięki temu możemy lepiej zaplanować dalszą analizę – czy należy uzupełniać brakujące dane, czy pomijać niektóre zmienne.”
+
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
@@ -85,10 +86,18 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Ten wykres przedstawia jakość danych o mieszkaniach na sprzedaż. Pozioma oś pokazuje różne cechy ofert, a pionowa to poszczególne mieszkania. Czerwone kreski wskazują, gdzie brakuje informacji — np. dla wielu ofert nie podano liczby pokoi czy formy własności. Dzięki temu możemy szybko ocenić, które kolumny wymagają uzupełnienia, a które są dobrze wypełnione, co pomoże nam poprawić jakość analiz.
 - Kod:  
   ```python
-  sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+      for df, title in [
+        (df_rent,     "Braki w danych wynajmu"),
+        (df_buy_2024, "Braki w danych zakupu 2024"),
+    ]:
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+        plt.title(title)
+        plt.show()
+
 - **Wizualizacja:**
   
-**Notatka Braki w danych 2023:**  
+**Notatka Braki w danych  2023:**  
 - Opis wykresu braki w danych zakupu 2023
 - Wizualizacja pokazuje rozmieszczenie brakujących danych w zbiorze ofert sprzedaży mieszkań. Dzięki niej można szybko zobaczyć, w których zmiennych (kolumnach) najczęściej występują braki, i w jakich wierszach one się pojawiają.
 - Opis do prezentacji
@@ -96,8 +105,15 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Kod:  
   ```python
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+      for df, title in [
+        (df_rent,     "Braki w danych wynajmu"),
+        (df_buy_2023, "Braki w danych zakupu 2023"),
+    ]:
+        plt.figure(figsize=(12, 6))
+        sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
+        plt.title(title)
+        plt.show()  
 - **Wizualizacja:**
-
 
 ---
 
@@ -107,8 +123,8 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   - Porównać mediany i zakres cen  
 - Kod:  
   ```python
-  sns.boxplot(x="city", y="price", data=df_buy_2024)
   sns.boxplot(x="city", y="price", data=df_buy_2024, ax=ax)
+  
 - **Wizualizacja:**
 
 **Notatka Boxplot – ceny wg miast:**
