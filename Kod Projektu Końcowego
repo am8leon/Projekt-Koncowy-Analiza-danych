@@ -338,6 +338,6 @@ def main():
     plt.title("Cramér’s V – asocjacja zmiennych kategorycznych")
     plt.tight_layout(); plt.show()
 
-
+    
 if __name__ == "__main__":
     main()
