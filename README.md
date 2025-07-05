@@ -78,7 +78,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
   sns.heatmap(df.isnull(), cbar=False, cmap="coolwarm")
 
 - **Wizualizacja:**
-![Braki w danych wynajmu](images/zd1.jpg)
+![Braki w danych wynajmu](image/zd1.jpg)
 
 
 **Notatka Braki w danych zakupu 2024:**  
