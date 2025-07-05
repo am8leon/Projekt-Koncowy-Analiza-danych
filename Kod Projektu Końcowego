@@ -46,9 +46,9 @@ def read_csv_with_fallback(filepath,
 
 
 def clean_city_column(df):
-    """
-    Usuwa nadmiarowe spacje, standaryzuje wielkość liter w kolumnie 'city'.
-    """
+    
+    #Usuwa nadmiarowe spacje, standaryzuje wielkość liter w kolumnie 'city'.
+    
     if 'city' in df.columns:
         df['city'] = (df['city']
                       .astype(str)
@@ -61,9 +61,9 @@ def clean_city_column(df):
 
 
 def impute_city_most_frequent(df):
-    """
-    Imputuje brakujące wartości w kolumnie 'city' najczęściej występującą wartością.
-    """
+    
+    #Imputuje brakujące wartości w kolumnie 'city' najczęściej występującą wartością.
+    
     if 'city' in df.columns:
         mode = df['city'].mode(dropna=True)
         if not mode.empty:
@@ -280,7 +280,7 @@ def main():
         ax.set_xlabel("Miasto")
         plt.xticks(rotation=45, ha='right')
 
-        # definiujemy zakres osi Y i ticki
+        # definiujemy zakres osi Y 
         y_min = df_buy_2024['price_per_m2'].min()
         y_max = df_buy_2024['price_per_m2'].max()
         yticks = np.linspace(y_min, y_max, 5)
