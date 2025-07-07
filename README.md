@@ -12,9 +12,8 @@ Analiza cen mieszkań — wynajem i zakup (2023–2024)
 1. Cel analizy  
 2. Dane i wstępne przetwarzanie  
 3. Eksploracyjna analiza danych  
-4. Model regresji i predykcja  
-5. Analiza ceny za m²  
-6. Kluczowe wnioski  
+4. Analiza ceny za m²  
+5. Kluczowe wnioski  
 7. Rekomendacje  
 
 ---
