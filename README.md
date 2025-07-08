@@ -121,7 +121,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 
 ---
 
-# Slajd 6: Boxplot – ceny zakupu mieszkan w róznych miastach 
+# Slajd 6: Boxplot – ceny zakupu mieszkan w różnych miastach 
 - Cel:  
   - Pokazać rozrzut i outliery  
   - Porównać mediany i zakres cen  
@@ -139,7 +139,7 @@ Na tym wykresie widzimy, które cechy mieszkań zawierają braki danych. Każda 
 - Tutaj widzimy wykres pudełkowy, który porównuje rozkład cen mieszkań w 15 miastach Polski. Każde pudełko obrazuje ceny od najtańszych do najdroższych – środkowa linia to mediana, czyli najczęściej spotykana cena. Im dłuższe pudełko, tym większe zróżnicowanie w ofertach. Warto tutaj zwrócić uwagę na Warszawę – jest nie tylko najdroższa, ale też bardzo zmienna, co widać po licznych kropkach z bardzo wysokimi cenami. Dla porównania – w Radomiu ceny są bardziej spójne i znacznie niższe.
 
 ----
-# Slajd 6: Boxplot – ceny wynajmu mieszkan w róznych miastach   
+# Slajd 6: Boxplot – ceny wynajmu mieszkan w różnych miastach   
 - Cel:  
   - Pokazać rozrzut i outliery  
   - Porównać mediany i zakres cen  
